@@ -3,9 +3,9 @@ const StudentsModel = require("../models/StudentsModel")
 // read students 
 exports.getAllStudents = async(req, res) => {
     const query = {}
-    const projection = "name class roll"
+    const projection = "name class"
     try{
-        const students = await StudentsModel.find({})
+        const students = await StudentsModel.find(query, projection,{})
         if(students){
             res.status(200).json({
                 status: "success",
@@ -65,6 +65,49 @@ exports.saveStudent = async(req, res) => {
         res.status(200).json({
             status: "failed",
             data: "Error Saving Student"
+        })
+    }
+} 
+
+// update single student 
+exports.updateStudent = async(req, res) => {
+    try{
+        const student = await StudentsModel.findByIdAndUpdate(req.params.id, req.body)
+        if(student){
+            res.status(200).json({
+                status: "success",
+                data: student
+            })
+        }
+    }catch(error){
+        console.log("Error updating student", error)
+        res.status(200).json({
+            status: "failed",
+            data: "Error updating student"
+        })
+    }
+} 
+
+// delete student 
+exports.deleteStudent = async(req, res) => {
+    try{
+        const student = await StudentsModel.findByIdAndDelete(req.params.id)
+        if(student){
+            res.status(200).json({
+                status: "success",
+                data: "student deleted"
+            })
+        }else{
+            res.status(200).json({
+                status: "success",
+                data: "Data not found"
+            })
+        }
+    }catch(error){
+        console.log("Error deleting student", error)
+        res.status(200).json({
+            status: "success",
+            data: "Error deleting student"
         })
     }
 } 
