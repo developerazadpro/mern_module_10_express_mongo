@@ -1,6 +1,6 @@
 const StudentsModel = require("../models/StudentsModel")
 
-// read all 
+// read students 
 exports.getAllStudents = async(req, res) => {
     const query = {}
     const projection = "name class roll"
@@ -19,9 +19,36 @@ exports.getAllStudents = async(req, res) => {
         }
     }catch(error){
         console.log("Error fetching students", error)
-        res.status(200).json({})
+        res.status(200).json({
+            status: "success",
+            data: "Data not found"
+        })
     }
 }   
+
+// read single student 
+exports.getStudent = async(req, res) => {
+    try{
+        const student = await StudentsModel.findById(req.params.id)
+        if(student){
+            res.status(200).json({
+                status: "success",
+                data: student
+            })
+        }else{
+            res.status(200).json({
+                status: "success",
+                data: "Data not found"
+            })
+        }
+    }catch(error){
+        console.log("Error fetching student", error)
+        res.status(200).json({
+            status: "success",
+            data: "Data not found"
+        })
+    }
+} 
 // save student
 exports.saveStudent = async(req, res) => {
     try{
@@ -35,6 +62,9 @@ exports.saveStudent = async(req, res) => {
         }
     }catch(error){
         console.log("Error saving student", error)
-        res.status(200).json({})
+        res.status(200).json({
+            status: "failed",
+            data: "Error Saving Student"
+        })
     }
 } 
