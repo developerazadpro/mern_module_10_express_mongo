@@ -1,5 +1,32 @@
 const StudentsModel = require("../models/StudentsModel")
 
+// save student
+exports.saveStudent = async(req, res) => {
+    try{
+        const student = new StudentsModel(req.body)
+        const savedStudent = await student.save()
+        if(savedStudent){
+            res.status(200).json({
+                status: "success",
+                data: savedStudent
+            })
+        }else{
+            console.log("Error saving student", error)
+            res.status(200).json({
+                status: "failed",
+                data: "Error Saving Student"
+            })
+        }
+    }catch(error){
+        console.log("Error saving student", error)
+        res.status(200).json({
+            status: "failed",
+            data: "Error Saving Student"
+        })
+    }
+} 
+
+
 // read students 
 exports.getAllStudents = async(req, res) => {
     const query = {}
@@ -46,25 +73,6 @@ exports.getStudent = async(req, res) => {
         res.status(200).json({
             status: "success",
             data: "Data not found"
-        })
-    }
-} 
-// save student
-exports.saveStudent = async(req, res) => {
-    try{
-        const student = new StudentsModel(req.body)
-        const savedStudent = await student.save()
-        if(savedStudent){
-            res.status(200).json({
-                status: "success",
-                data: savedStudent
-            })
-        }
-    }catch(error){
-        console.log("Error saving student", error)
-        res.status(200).json({
-            status: "failed",
-            data: "Error Saving Student"
         })
     }
 } 

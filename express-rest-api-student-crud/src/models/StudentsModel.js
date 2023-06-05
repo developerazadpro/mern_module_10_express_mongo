@@ -11,7 +11,19 @@ const StudentSchema = mongoose.Schema(
         },
         roll:{
             type: Number,
-            required:true
+            required:true,
+            min:[1, 'Min 1 & Max 100, but supplied value is = {VALUE}'],
+            max:[100, 'Min 1 & Max 100, but supplied value is = {VALUE}'],
+            validate:{
+                validator: function(value){
+                    if(value.lenght <= 0 || value.lenght >=100){
+                        return false;
+                    }else{
+                        return true
+                    }
+                },
+                message: '1 to 100 range roll required'
+            }
         },
         remarks:{
             type: String
