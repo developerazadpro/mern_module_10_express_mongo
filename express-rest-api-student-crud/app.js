@@ -42,7 +42,7 @@ mongoose.connect(url, option)
     })
 
 
-//app.use("/api/v1", studentRouter)
+app.use("/api/v1", studentRouter)
 
 // 404 page define
 app.use("*", (req, res) => {
